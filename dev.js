@@ -1,7 +1,9 @@
 344333333333333333333333333333
-<<<<<<< HEAD
 dsfddsfadsfsdaf
 dsaff
-=======
-remotw111111111111111111111111
->>>>>>> 4608f76b09fedce1fb4f1025dfb963b9ab2e8854
+dsfddsfadsfsdaf
+dsaff
+dsfddsfadsfsdaf
+dsaff
+dsfddsfadsfsdaf
+dsaff
