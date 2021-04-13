@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .static {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .dynamic {
+      background: red;
+    }
+
+    .color {
+      background: green;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <div class="static" :class="{dynamic:dyFlag}">
+      <h1>{{person}}</h1>
+      <ul>
+        <li v-for='(item,index) in dataList' :key="item.age" :class='setColor' @click='del(index,$event)'>{{item.name}}
+        </li>
+      </ul>
+      <input type="text" v-model='createP' @keydown.enter.exact='add'>
+      <div>
+        <div v-if='flag'>
+          <label>请输入账号</label>
+          <input type="text" placeholder="enter your account" key='a'>
+        </div>
+        <div v-else>
+          <label>请输入密码</label>
+          <input type="text" placeholder="enter your password" key='b'>
+        </div>
+        <button @click='flag=!flag'>切换输入</button>
+        <!-- 上面这个地方就是说明  key是控制vue是否重新渲染的开关 -->
+        <form @submit.prevent>
+          <!-- 提交事件不再重载页面 -->
+          <button type="submit">提交</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script>
+    let vm = new Vue({
+      el: '#app',
+      data: {
+        dyFlag: false,
+        createP: '',
+        flag: true,
+        dataList: [{
+          name: '张三',
+          age: '12'
+        }, {
+          name: '李四',
+          age: '32'
+        }, {
+          name: '王五',
+          age: '34'
+        }]
+      },
+      computed: { //被计算的属性  基于他们的响应式依赖 进行缓存的
+        'person'() {
+          return this.dataList[0].name + this.dataList[this.dataList.length - 1].name
+        },
+        'setColor'() {
+          return {
+            color: this.dataList.length % 2 == 0
+          }
+        }
+      },
+      watch: {
+        'dataList': {
+          deep: true,
+          handler() {
+            console.log(11111111111)
+          }
+        }
+      },
+      created() {
+
+      },
+      updated() {
+        this.dyFlag = true
+      },
+      methods: {
+        add() {
+
+          this.dataList.push({
+            name: this.createP
+          })
+          this.createP = ''
+
+        },
+        del(i, event) {
+          console.log(i, event)
+          this.dataList.splice(i, 1)
+        },
+      },
+
+    })
+  </script>
+</body>
+
+</html>

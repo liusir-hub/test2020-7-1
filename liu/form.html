@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .static {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <div class="static">
+      <div class="formC">
+        <h1>{{formV}}</h1>
+        <form action="http://baidu.com">
+
+          <ul>
+            <li v-for='i in textvup ' :style='liStyle'>{{i}}</li>
+          </ul>
+          <input type="text" name="" id="" v-model='textv' @keydown.enter='ina'>
+          <input type="checkbox" name="" id="" v-model="checkoneV">
+          <p>{{checkoneV}}</p>
+          <input type="checkbox" name="" id="" value='aa' v-model='checkallV'>
+          <input type="checkbox" name="" id="" value='bb' v-model='checkallV'>
+          <p>{{checkallV}}</p>
+          <input type="radio" name="" id="" value="man" v-model='radiooneV'>
+          <p>{{radiooneV}}</p>
+          <input type="radio" name="" id="" value="man" v-model='radioallV'>
+          <input type="radio" name="" id="" value="woman" v-model='radioallV'>
+          <input type="radio" name="" id="" value="three" v-model='radioallV'>
+          <p>{{radioallV}}</p>
+          <!-- 单选v-model总是绑定到value值上 -->
+          <button type="submit" @click.prevent>提交</button>
+          <hr>
+        </form>
+      </div>
+      <div>
+        <select name="" id="" v-model='selectV'>
+          <option value="" disabled>请选择</option>
+          <option value="first">第一</option>
+          <option value="secend">第二</option>
+        </select>
+        <p>选择框-单选{{selectV}}</p>
+        <select name="" id="" multiple v-model='selectmulV'>
+          <option value="" disabled>请选择</option>
+          <option value="first">第一</option>
+          <option value="secend">第二</option>
+        </select>
+        <p>选择框-多选{{selectmulV}}</p>
+        <input type="text" name="" id="" v-model.lazy.number='numV'>
+        <p>值类型{{typeof numV}}</p>
+        <aaa></aaa>
+        <ccc></ccc>
+        <bbb></bbb>
+      </div>
+    </div>
+  </div>
+  <script>
+    Vue.component('aaa', {
+      data() {
+        return {
+          count: 0
+        }
+      },
+      template: '<div @click="count++">{{count}}</div>'
+    })
+    Vue.component('ccc', {
+      data() {
+        return {
+          count: 0
+        }
+      },
+      template: '<div @click="count++">{{count}}</div>'
+    })
+    let vm = new Vue({
+      el: '#app',
+      data: {
+        formV: '',
+        textv: '',
+        textvup: [],
+        checkoneV: true,
+        checkallV: ['aa'],
+        radiooneV: '',
+        radioallV: '',
+        liStyle: {
+          textAlign: "right"
+        },
+        selectV: '',
+        selectmulV: [],
+        numV: null,
+      },
+      computed: {
+
+      },
+      watch: {
+
+      },
+      components: {
+        bbb: {
+          data() {
+            return {
+              countt: 100
+            }
+          },
+          template: '<div @click="countt++">{{countt}}</div>'
+        }
+      },
+      methods: {
+        ina(e) {
+          console.log(e)
+          this.textvup.push(this.textv)
+          this.textv = ''
+        }
+      },
+      created() {
+
+      }
+    })
+  </script>
+</body>
+
+</html>
