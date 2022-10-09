@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="keywords" content="HTML,商品">
+    <meta name="description" content="html练习">
+    <title>这是一个网页</title><!--用于设置网页的元数据-->
+    <link rel="stylesheet" href="">
+    <style>
+      div[id='app']{
+        width: 100px;
+        height: 100px;
+        background-color: red;
+        position: relative;
+        top: 800px;
+      }
+    </style>
+    <script>
+      /* 协议scheme   主机host      端口port(http 80 https443)         路径path                   */
+      // https://    www.example.com :80/                      Users/Pactera/Desktop/liuwenling/aa.html
+      /* URL Uniform Resource Locator  统一资源定位符
+      
+      
+      
+      
+      H5新增的几个标签
+      header头部 footer尾部 main主体 artical文章 aside侧边栏 section章节 nav导航
+      */
+    </script>
+    <noscript></noscript>
+    <base href=""><!--用来设置网页内部相对URL的计算基准 -->
+  </head>
+  <body>
+    <div tabindex="0">士大夫士大夫士大夫大师傅士大夫大师傅的</div>
+    <a href="#app" accesskey="s">去</a>
+    <div id="data" data-con="我是一只鱼">&yen;</div>
+    <div id="app" title="这是个按钮" tabindex="0" onclick="jja()">&lt;button&gt;</div>
+  </body>
+  <script>
+    data.innerHTML=data.getAttribute('data-con')+data.innerHTML
+    function jja(){
+      console.log(event.target)
+    }
+  </script>
+</html>

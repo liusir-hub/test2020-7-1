@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <div>
+    <canvas id="myCanvas"></canvas>
+    <img />
+  </div>
+  <script>
+    function drawCanvas() {
+      let canvas = document.getElementById('myCanvas');
+      let ctx = canvas.getContext('2d');
+
+      let img = new Image();
+      let img1 = new Image();
+      let img2 = document.createElement('img');
+      img.setAttribute('crossOrigin', 'Anonymous')
+      img.src = './01.jpg';
+      img1.setAttribute('crossOrigin', 'Anonymous')
+      img1.src = './02.jpg';
+      img.onload = () => {
+        ctx.drawImage(img, 20, 20, 80, 80);
+        ctx.drawImage(img1, 30, 30, 80, 80);
+        img2.src = canvas.toDataURL();
+        canvas.parentNode.appendChild(img2)
+      }
+      return img2
+    }
+    drawCanvas()
+
+    setTimeout(function () {
+      console.log(100)
+      console.log(this)
+    }, 5000)
+  </script>
+</body>
+
+</html>;

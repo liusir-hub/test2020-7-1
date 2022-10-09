@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <!-- <to-to aa="name" @changeaa="showaa"></to-to> -->
+    <!-- <to-to v-bind:aa="name" v-on:aa:update="showaa"></to-to> -->
+    <to-to v-bind:aa.sync="namew" >
+      <template v-slot:header>
+        <div>
+          headerheaderheader{{aa}}
+        </div>
+      </template>
+      <template v-slot:footer="{user}">
+        <div>
+          footerfooterfooter{{namew}}{{user}}
+        </div>
+      </template>
+    </to-to>
+    <button @click="dodo">获取namew</button>
+    <dodo></dodo>
+    <lili></lili>
+    <sss></sss>
+  </div>
+  <script type="module">
+    import Vue from 'https://cdn.jsdelivr.net/npm/vue@2.7.10/dist/vue.esm.browser.js'
+    Vue.component('to-to',{
+      props:['aa'],
+      template:'<div><input type="text" :value="aa" @input="$emit(`update:aa`,$event.target.value)"><slot name="footer" :user="aa"></slot><slot name="header">我则里是默认值</slot></div>'
+    })
+
+    Vue.component('dodo',{
+      data(){
+        return {
+          flag:true,
+          value:1,
+          
+        }
+      },
+      
+      template:`
+        <div>
+          <div style='display:flex'>
+            <p @click='value=1'>第一</p>
+            <p @click='value=2'>第二</p>
+          </div>
+          <div >
+            <keep-alive>
+              <component :is='value==1?"toto":"gogo"'></component>
+            
+            </keep-alive>
+          </div>
+          
+          
+        </div>
+      `
+    })
+    Vue.component('toto',{
+      data(){
+        return {
+          content:1
+        }
+      },
+      methods:{
+        sele(e){
+          console.log(e.target.innerHTML)
+          this.content=e.target.innerHTML
+        }
+      },
+      template:`
+      <div style='display:flex'>
+              <div @click='sele'>
+                <li>1</li>  
+                <li>2</li>  
+                <li>3</li>  
+              </div>
+              <div >
+               夫人士大夫首发式发生 {{content}}
+              </div>
+            </div>
+      `
+    })
+    Vue.component('gogo',{
+      template:`
+      
+      <div v-else>
+              <article>这是第二文章</article>
+            </div>
+      `
+    })
+    Vue.component('lili',function(resolve,reject){
+      setTimeout(() => {
+          resolve({
+            template:'<div>我是异步组件</div>'
+          })
+      }, 2000);
+    })
+    // Vue.component('ss',()=>import('./01.vue'))
+    Vue.component('sss',()=>({
+      // 需要加载的组件 (应该是一个 `Promise` 对象)
+      component: {
+        data(){
+          return {
+            val:1000
+          }
+        },
+        template:'<div>{{val}}</div>'
+      },
+      // 异步组件加载时使用的组件
+      // loading: LoadingComponent,
+      // 加载失败时使用的组件
+      // error: ErrorComponent,
+      // 展示加载时组件的延时时间。默认值是 200 (毫秒)
+      delay: 200,
+      // 如果提供了超时时间且组件加载也超时了，
+      // 则使用加载失败时使用的组件。默认值是：`Infinity`
+      timeout: 3000
+    }))
+
+
+    let app =new Vue({
+      el:'#app',
+      data:{
+        namew:'我是父组件数据',
+        flag:true
+      },
+      watch:{
+        namew(newval){
+          console.log(newval)
+        }
+      },
+      methods:{
+        showaa(aa){
+          console.log(aa)
+        },
+        dodo(){
+          console.log(this.namew)
+        }
+      },
+      components:{
+        xcode:()=>import('./01.html'),
+        meycom:{
+          data(){
+            return {
+
+            }
+          },
+          template:''
+        },
+
+      }
+    })
+  </script>
+</body>
+</html>

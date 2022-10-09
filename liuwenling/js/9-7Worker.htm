@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    //主线程
+    let url='https://mock.apifox.cn/m1/1573012-0-default/xhr/01'
+
+    function getData(){
+      let data,num=0;
+      setInterval(()=>{
+        let xhr = new XMLHttpRequest()
+        xhr.open('POST','https://mock.apifox.cn/m1/1573012-0-default/xhr/01',true)
+        xhr.onreadystatechange=()=>{
+          if(xhr.readyState==4){
+            if(xhr.status==200){
+              if(data!==xhr.response){
+                // console.log(xhr.response)
+                data=xhr.response;
+                postMessage(xhr.response)
+              }else{
+                num++
+                if(num>4){
+                  close() 
+                  return 
+                }
+                postMessage('无变化')
+              }
+            }
+          }
+        }
+        xhr.send()
+      },3000)
+    }
+    function startWorker(f){
+      let blob=new Blob(['('+f.toString()+')()'])
+      let url=URL.createObjectURL(blob);
+      let worker=new Worker(url)//js链接地址
+      return worker;
+    }
+    let ww=startWorker(getData)
+    ww.onerror=()=>{
+      console.log()
+    }
+    ww.onmessage=()=>{
+      console.log(event)
+    }
+  </script>
+  
+</body>
+</html>

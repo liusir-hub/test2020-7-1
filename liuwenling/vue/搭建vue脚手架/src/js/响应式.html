@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app" class="nihao">
+    <p id="ss" class="123"> sdfaf</p>
+  </div>
+  <script>
+    let vnode={
+      tag:'div',
+      props:{
+        id:'app',
+        className:'nihhao'
+      },
+      children:[
+        {
+          tag:'p',
+          props:{
+            if:'ss',
+            className:'123'
+          }
+        }
+      ]
+    }
+    let obj ={
+      a:100,
+      b:'nume',
+      c:{
+        a:20
+      },
+      g:[1,2,3,4]
+    }
+    
+    function genginx(){
+      console.log('更新视图')
+    }
+    let orrarr=Object.create(Array.prototype);
+    ['push','pop'].forEach(function(item){
+      orrarr[item]=function(){
+        genginx();
+        Array.prototype[item].call(this,...arguments)
+      }
+    })
+    function observer(obj){
+      //原始类型直接返回
+      if(typeof obj !=='object'|| obj===null){
+        return obj
+      }
+      if(Array.isArray(obj)){
+        obj.__proto__=orrarr
+      }
+      
+      //对象
+      for(let i in obj){
+        defineActive(obj,i,obj[i])
+      }
+    }
+    function defineActive(target,key,oldval){
+      //深度监听  ----意味着对象多少层就递归监听多少次
+      observer(oldval)
+      Object.defineProperty(target,key,{
+        get(){
+          return oldval
+        },
+        set(newval){
+          if(newval!==oldval){
+            oldval=newval
+            genginx()
+          }
+        }
+      })
+    }
+    observer(obj)
+    obj.a=20
+    //深度监听对象可以了，
+    obj.c.a=2323
+    //数组怎么处理呢
+    obj.g.push(1)
+  </script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    ul li{
+      list-style: none;
+      padding-left: 20px;
+    }
+    div>ul{
+      display: none;
+    }
+    div::before{
+      content: '+';
+    }
+    div.active::before{
+      content:'-'
+    }
+  </style>
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.1/jquery.js"></script>
+</head>
+<body>
+  <div>
+    城市1
+    <ul class="header">
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>4</li>
+    </ul>
+  </div>
+  <div>
+    城市2
+    <ul class="content">
+      <li>111</li>
+      <li>222</li>
+      <li>333</li>
+      <li>444</li>
+    </ul>
+  </div>
+    <script>
+        $('div').click(function(){
+          $(this).addClass('active').siblings().removeClass('active')
+          $('div.active').children('ul').show(1000);
+          $('div.active').siblings().children('ul').hide(1000);
+        })
+        $.ajax({
+          url:'',
+          data:{
+
+          },
+          headers:{
+
+          },
+          method:'',
+          dataType:"",
+          success(){
+
+          },
+          error(){
+
+          },
+          timeout:1000
+        })
+    </script>
+</body>
+</html>

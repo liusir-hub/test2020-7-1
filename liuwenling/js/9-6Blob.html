@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+    <input type="file" accept="image/*" multiple onchange="dosomething(this.files)">
+    <input type="file" accept="*" onchange="dodo()">
+    <script>
+      function dosomething(data){
+        console.log(data)//fileList类型
+        Array.from(data).forEach(i=>{
+          let img =document.createElement('img')
+          // console.log(URL.createObjectURL(i))
+          // img.src=URL.createObjectURL(i)
+          let reader =new FileReader();
+          reader.readAsDataURL(i);
+          reader.onload=function(){
+            console.log(reader.result)
+            img.src=reader.result; 
+          };
+          img.style='width:100px;height:100px';
+          document.body.append(img)
+        })
+      }
+      function dodo(){
+        console.log(event)
+        let data=event.target.files[0]
+        console.log(data)
+        let reader=new FileReader()
+        reader.readAsText(data)
+        reader.onload=()=>{
+          console.log(reader.result)
+          let ifr=document.createElement('p');
+          ifr.append(document.createTextNode(reader.result))
+          document.body.append(ifr)
+        }
+      }
+      let ff=new File(['./hello.text'],'./hello.text',{type:'text/plain',lastModified:Date.now()})
+      let read=new FileReader();
+      read.readAsText(ff);
+      read.onload=()=>{
+        console.log(read.result)
+      }
+      console.log(ff)
+    </script>
+</body>
+</html>

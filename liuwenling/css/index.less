@@ -1,0 +1,26 @@
+@import './theme.less';
+@pro:color;
+.content{
+  color:@base-color;
+  &:hover{
+    color:@dark-color;
+  }
+}
+.button:extend(.content){
+  background-@{pro}: green;
+}
+//merge和mixin合并和混入
+.mixin(){ //带括号不会被编译到css文件中
+  box-shadow+: inset  0 0 20px #666;
+}
+.ceshi{
+  .mixin();
+  box-shadow+: inset 0 0 10px #555;
+}
+.mixin(@dd:2px){
+  border+_: @dd;
+}
+.border-style{
+  .mixin(1px);
+  border+_:solid red;
+}

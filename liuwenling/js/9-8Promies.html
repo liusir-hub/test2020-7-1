@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function getData(id){
+      return  new Promise((resolve,reject)=>{
+        //准确的说promise相当于一个容器里面保存着未来某个状态需要用到的值
+        let xhr=new XMLHttpRequest();
+        xhr.open('POST',`https://mock.apifox.cn/m1/1573012-0-default/xhr/${id}`,true);
+        xhr.responseType='application/json';
+        xhr.timeout=2000;
+        xhr.ontimeout=function(){
+
+        }
+        xhr.send();
+        xhr.onreadystatechange=()=>{
+          if(xhr.readyState==4){
+            if(xhr.status==200){
+              resolve(JSON.parse(xhr.response))
+            }
+          }
+        }
+      })
+
+    }
+     
+     //catch 捕获冒泡错误 前面promise中和then中的错误都能捕获到
+    let pros=[1,2,3,4].map(i=>{
+        return getData(i)
+    })
+    console.log(pros)
+    let arr=Promise.all(pros).then(res=>console.log(res))
+    let arrr=Promise.race(pros).then(res=>console.log(res))
+    //allSettled 标示所有的promise都已经状态固定 返回数组为对应的状态和返回值对象
+    let arrallSettled=Promise.allSettled(pros).then(res=>console.log(res))
+     //手写一个promise
+     class Pro{
+       constructor(fn){
+         this.state='pending'
+         this.value,this.reason
+         let resolve=val=>{
+           if(this.state=='pedding'){
+             this.state='fulfilled'
+             this.value=val
+           }
+         }
+         let reject=reason=>{
+           if(this.state=='pending'){
+             this.state='rejected'
+             this.reason=reason
+           }
+         }
+         try {
+          fn(resolve,reject)
+         } catch(e) {
+           reject(e)
+         }
+       }
+       then(onresolve,onreject){
+        switch(this.state){
+          case 'fulfilled':
+            onresolve();
+            break;
+          case 'rejected':
+            onreject();
+            break;
+          default:
+        }
+       }
+     }
+  </script>
+</body>
+</html>

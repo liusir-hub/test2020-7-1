@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    [v-cloak]{display:none}
+  </style>
+</head>
+<body>
+  <div id="app" v-cloak>
+    <!-- 写锚点组件 -->
+    <arical :level="3">你好</arical>
+    <p>{{100|money}}</p>
+    <p>{{231|say}}</p>
+  </div>
+  <script type="module">
+    import Vue from 'https://cdn.jsdelivr.net/npm/vue@2.7.10/dist/vue.esm.browser.js'
+    import Plugin from './09插件.js'
+    Vue.use(Plugin)
+
+    Vue.myme()
+
+
+    Vue.component('arical',{
+      props:{
+        level:{
+          type:Number,
+          required:true
+        }
+      },
+      render(h){
+        return h('h'+this.level,this.$slots.default)
+      }
+    })
+    let app=new Vue({
+      el:'#app',
+      mounted(){
+        this.$getdata()
+        console.log(this.vava,this.$mixin)
+      },
+      filters:{
+        money(val){
+          return val*100
+        }
+      }
+    })
+  </script>
+</body>
+</html>

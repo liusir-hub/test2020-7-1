@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://unpkg.com/vue@3"></script>
+  <script src="https://unpkg.com/vue-router@4"></script>
+  <script src="https://unpkg.com/vuex@4.0.0/dist/vuex.global.js"></script>
+</head>
+<body>
+  <div id="app">
+    <keep-alive>
+      <router-link to="/aaa" v-if="$route.meta.data=='index'">goaaa</router-link>
+    </keep-alive>
+    
+    <router-view ></router-view>
+  </div>
+  <script type="module">
+    
+    const Foo={
+      data(){
+        return {
+          name:'路由组件'
+        }
+      },
+      methods:{
+        gowievv(){
+          this.$router.push('user')
+          this.$router.push({path:'uesr'})
+          this.$router.push({name:'user'})
+          this.$router.push({path:'user',query:{plan:'a'}})
+          this.$router.push({name:'user',params:{userid}})
+        }
+      },
+      template:`<div>
+        <p>{{name}}</p>
+        <router-link to='/user/1'>去用户1那</router-link>
+        <router-link to='/user/2'>去用户2那</router-link>
+        <button @click='gowievv'>编程时导航</button>
+        </div>`
+    }
+    const AAA = { template: '<div>AAA</div><router-view></router-view>' }
+    const BBB = { template: '<div>BBB</div>' }
+    let {mapActions} =Vuex;
+    const USR={
+      created(){
+        
+      },
+      watch:{
+        $route(to,from){
+          console.log(to,from)
+        }
+      },
+      beforeRouteEnter(to,from,next){
+        console.log(to,from)
+        next()
+      },
+      methods:{
+        countadd(){
+          this.$store.commit('changecount')
+          this.$store.dispatch('aaaa',{name:'扎根三'})
+        },
+        ...mapActions([
+          'sdsfsf',
+          {
+            aaa:'sdsfsf'
+          }
+        ])
+      },
+      template:'<div>用户{{$route.params.id}}<p>{{$store.state.count}}</p><button @click="countadd">点击增加</button><button @click="sdsfsf">点击actions</button></div>'
+    }
+    let  store=Vuex.createStore({
+      state:{
+        count:1
+      },
+      mutations:{
+        changecount(state,payload=1){
+          state.count++
+          console.log(payload)
+        },
+        changssssss(state,payload){
+          state.count+=10
+        }
+      },
+      actions:{
+        dispathchangess(context){
+          context.commit('changecount')
+        },
+        aaaa({commit},payload){
+          setTimeout(() => {
+            commit('changecount',payload)
+          }, 1000);
+        },
+        sdsfsf({commit},paylod){
+          commit('changssssss')
+        }
+      }
+    })
+
+
+
+    let router=VueRouter.createRouter({
+      history:VueRouter.createWebHashHistory(),
+      routes:[
+        {//动态路由匹配
+          path:"/user/:id",
+          name:'user',
+          component:USR,
+          beforeEnter(to,from,next){
+            next()
+          }
+        },
+        {
+          path:'',
+          name:'index',
+          component:Foo,
+          meta:{
+            data:'index'
+          }
+        },
+        {
+          path:'/aaa',
+          name:'aaaa',
+          component:AAA,
+          children:[
+            {
+              path:'20',
+              component:{
+                template:'<div>20</div>'
+              }
+            }
+          ],
+          meta:{
+            data:'a'
+          }
+        },
+        /* 
+        命名视图
+        <router-view></router-view>
+        <router-view name='a'></router-view>
+        <router-view name='b'></router-view>
+        */
+        {
+          path:'/bbb',
+          name:'bbbb',
+          component:{
+            default:()=>import(/* webpackChunkName:"group-chunk" */'./aaa'),
+            a:()=>import('./aaa.vue'),
+            b:()=>import('./bbb.vue')
+          },
+          meta:{
+            data:'b'
+          }
+        },
+        {
+          // path:'use*',
+          // component:{
+          //   data(){
+          //     return {
+          //       error:'错误页面'
+          //     }
+          //   },
+          //   template:"<div>{{error}}</div>"
+          // }
+        }
+      ]
+    })
+    router.beforeEach((to,from,next)=>{
+      console.log(to.name)
+      next()
+    })
+    router.afterEach((to,from)=>{
+
+    })
+    
+
+
+    let app=Vue.createApp({})
+    app.use(router);
+    app.use(store)
+    app.mount('#app')
+  </script>
+</body>
+</html>

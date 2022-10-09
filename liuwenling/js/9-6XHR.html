@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <button>请求数据</button>
+  <div id="app"></div>
+  <form action="https://mock.apifox.cn/m1/1573012-0-default/xhr/01" method="post">
+    <input type="text" name="username" value="张三">
+    <button type="submit">提交</button>
+  </form>
+  <iframe  frameborder="0"></iframe>
+  <script>
+    // URL https://mock.apifox.cn/m1/1573012-0-default/xhr/01
+    let url='https://mock.apifox.cn/m1/1573012-0-default/xhr/01'
+    
+    function getData(method,url){
+      return new Promise((resolve,reject)=>{
+        let xhr=new XMLHttpRequest();
+        xhr.open(method,url,true);
+        xhr.setRequestHeader('Content-Type','application/json');
+        xhr.timeout=1000;
+        xhr.ontimeout=()=>{
+          console.log('error')
+        }
+        xhr.responseType='blob';
+        let formData=new FormData();
+        formData.append('name','zhangsan');
+        formData.append('age',19)
+        
+        xhr.onreadystatechange=function(res){
+          console.log(res)
+          if(xhr.readyState==4){
+            let getRH=xhr.getAllResponseHeaders()
+            if(xhr.status==200){
+              console.log(xhr.response,getRH)
+              resolve(xhr.response)
+            }
+          }
+        }
+        xhr.send(formData);
+      })
+    }
+    getData('POST',url)
+    // window.onhashchange=function(){
+    //   console.log('hashchange')
+    // }
+    //第一种方法的 不同源跨域内嵌iframe通信方式 是设置子窗口的哈希值 内部监听onhashchange
+    // let isrc="https://wangdoc.com/javascript/bom/same-origin.html"
+    // let ifa=document.querySelectorAll('iframe')[0]
+    // ifa.src=isrc+'#'+30
+    //第二种方法  跨文档通信API window.postMessage()
+    // let popup=window.open('file:///C:/Users/Pactera/Desktop/%E6%96%B0%E5%BB%BA%E6%96%87%E4%BB%B6%E5%A4%B9%20(2)/test2020-7-1/liuwenling/js/9-6BOM.html','title')
+    // document.onclick=()=>{
+    //   popup.postMessage('nihao','file:///C:/Users/Pactera/Desktop/%E6%96%B0%E5%BB%BA%E6%96%87%E4%BB%B6%E5%A4%B9%20(2)/test2020-7-1/liuwenling/js/9-6BOM.html')
+    // }
+    // console.log(window.decodeURI(window.location.href))
+  </script>
+</body>
+</html>

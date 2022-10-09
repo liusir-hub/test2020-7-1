@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .box{
+      width: 100%;
+    }
+    main,.box>div{
+      float: left;
+    }
+    main{
+      width: 100%;
+      background-color: green;
+      height: 300px;
+    }
+    .box>div{
+      background-color: red;
+      width: 200px;
+      height: 200px;
+    }
+    .box>:nth-child(2){
+      margin-left: -100%;
+    }
+    .box>:nth-child(3){
+      margin-left: -200px;
+    }
+    main>div{
+      margin: 0 200px;
+      background-color: aqua;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <main>
+      <div>
+        士大夫士大夫士大夫士大夫随风倒十分
+      </div>
+    </main>
+    <div>2</div>
+    <div>3</div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <!-- 组件上使用v-model  
+      正常在input 上使用model是
+      <input type='text' :value='text' @input='text=$event.target.value' />
+      <to-to :value='text' @input='text=$event'>
+    -->
+    <to-to  :ma="20" :mi="30" v-model="textval" :list="list" v-slot="{toparent}" class="nihap" style="height:90%" @click="clickevent" @change="changeevent">
+      <!-- 组件的非props的attribute属性  一般会替换到组件的根部元素上 同名覆盖 不同名添加-->
+      <!-- 但有时候组件设计不希望继承属性怎么半 -->
+      <component :item-a="toparent" :da="20"  :is="toparent.id>1?'to':'do'"></component>
+      <!-- <to :item="toparent" is=""></to>
+      <to :item="toparent" is=""></to> -->
+    </to-to>
+    <!-- <go-go v-model="gogo"></go-go> -->
+  </div>
+  <script type="module">
+    import Vue from 'https://cdn.jsdelivr.net/npm/vue@2.7.10/dist/vue.esm.browser.js';
+    Vue.component('to-to',{
+      inheritAttrs:false,
+      props:{
+        value:String,
+        list:Array,
+      },
+      mounted() {
+        console.log(this.$attrs)
+      },
+      data(){
+        return {
+          name:'我是i子组件',
+          
+        }
+      },
+      computed:{
+        events(){
+          return Object.assign(
+            {},
+            this.$listeners,
+            {
+              input:($event)=>{
+                this.$emit('input',$event.target.value)
+              }
+            
+            }
+          )
+        }
+      },
+      template:`<div class='container' style='height:100%'>{{name}}
+          <input v-bind='$attrs' :value='value' v-on='events' />
+          <slot v-for="item in list" :toparent='item'></slot>
+        </div>`
+      
+    })
+    Vue.component('GoGo',{
+      model:{
+        value:'aa',
+        event:'change'
+      },
+      watch:{
+        'name':{
+          handler(newval,olval){
+            
+          },
+          immediate:true
+        }
+      },
+      props:{
+        aa:Array,
+      },
+      template:`<div>
+          <label for='o1'>第一张</label>
+          <input type='checkbox' id='o1' :checked='aa' v-on:change="$emit('change', $event.target.checked)"/>
+         
+        </div>`
+    })
+
+    Vue.component('to',{
+      props:['itemA','da'],
+      data(){
+        return {
+          newda:this.da
+        }
+      },
+      computed:{
+      }
+      ,
+      methods:{
+        AudioBufferSourceNode(){
+
+
+          Function.prototype.myCall=function(context){
+              context.fn=this;
+              let args=[...context].slice(1)
+              let result=context.fn(...args)
+              delete context.fn
+              return result
+          }
+        }
+      },
+      template:'<div>{{itemA?.id}}<button @click="newdaa=30"></button></div>'
+    })
+    Vue.component('do',{
+      props:['itemA'],
+      template:'<div>{{itemA?.name}}</div>'
+    })
+
+
+
+
+
+
+    let app=new Vue({
+      el:'#app',
+      data:{
+        textval:'我是父组件的value',
+        list:[{id:1,name:'shasna'},{id:2,name:'sdfaf'},{id:3,name:'wangwu'}],
+        gogo:['one','two']
+      },
+      watch:{
+        textval(newval){
+          console.log(newval)
+        },
+        gogo(newval){
+          console.log(newval)
+        }
+      },
+      methods:{
+        clickevent(){
+          console.log('1111')
+        },
+        changeevent(){
+          console.log('2222')
+        }
+      }
+
+    })
+  </script>
+</body>
+</html>

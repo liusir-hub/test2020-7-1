@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div >
+    <ul>
+      <li></li>
+      <li></li>
+    </ul>
+  </div>
+  <script>
+      //实现一个函数foo 使得它每次调用自身next都可以返回值
+      //例如let it =foo(['a','b'])
+      //it.next() //{value:'a',done:false}
+      //it.next() //{value:'b',done:false}
+      //it.next() //{value:undefined,done:true}
+      let it = foo(['a','b'])
+      function foo(data){
+        let indexin=0;
+        return {
+          next(){
+            return indexin<data.length?{value:data[indexin++],done:false}:{value:undefined,done:true}
+          }
+        }
+      }
+      console.log(it.next(),it.next(),it.next(),it.next())
+
+      let arr=[12,123,123,213,13,13]
+      let arrIterator=arr[Symbol.iterator]();
+      console.log(arrIterator.next())
+      NodeList.prototype[Symbol.iterator]=[][Symbol.iterator];
+      [...document.querySelectorAll('li')]
+      let lis=document.querySelectorAll('li')
+      for(let i of lis){
+        console.log(i)
+      }
+      //用到的iterator接口场合有哪些/
+      let [x,y]=[a,...b]=new Set([1,2,3,4])
+      console.log(x,y,a,b)
+      let {foo1,bar}={aa,bb}={foo1:10,bar:20,aa:00,bb:11}
+      console.log(foo1,bar,aa,bb)
+      //yield*  还有任何接受数组作为参数的场合 Array.of() Array.from() ,Map ,Set,Promise.all() Promise.race()
+      //Iterator接口实现   自行实现
+      function iterator(data){
+        let ind= 0;
+        return {
+          next(){
+            return ind<data.length?{value:data[ind++],done:false}:{value:undefined,done:true}
+          }
+        }
+      }
+      let ee= iterator([12,,3,21,3,213,12,2])
+      let tt=0;
+      while(tt<[12,,3,21,3,213,12,2].length+1){
+        tt++
+        console.log(ee.next())
+      }
+      //那么使用generator函数呢，本身generator就可以生成一个遍历器对象
+      function* foo(){
+        yield 1;
+        yield 2;
+        yield 3;
+      }
+      let fooo=foo()
+      for(let i of fooo){
+        console.log(i)
+      }
+
+
+
+
+  </script>
+</body>
+</html>

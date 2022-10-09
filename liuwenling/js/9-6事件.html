@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="练习">
+    <meta name="description" content="dom练习">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title></title>
+    <style>
+      div[id='app']{
+        width: 100px;
+        height: 100px;
+        background-color: red;
+        padding: 10px;
+        border: 1px solid green;
+        background-clip: content-box;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- <div id="app" onclick="dosome(event)"></div> -->
+    <div id="app">
+      <a id="aa" href="www.baidu.com">去百度</a>
+    </div>
+    <script>
+      // function dosome(event){
+      //   console.log(event,'html绑定事件')
+      // }
+      // app.onclick=function(e){
+      //   console.log(e,'元素节点事件方法')
+      // }
+      // app.addEventListener('click',(e)=>{console.log(e,'添加事件监听器')},{capture:true,once:true})
+      // let event=new Event('click');
+      // app.dispatchEvent(event);
+      // let ev=document.createEvent('Event');
+      // ev.initEvent('bb',false,false);
+      // document.addEventListener('bb',(e)=>{
+      //   console.log(e.timeStamp,'bbbb')
+      // })
+      // let eve=document.createEvent('Event');
+      // eve.initEvent('bbe',false,false);
+      // document.addEventListener('bbe',(e)=>{
+      //   console.log(e.timeStamp,'bbbbee')
+      // })
+      // document.dispatchEvent(ev)
+      // console.time()
+      // for(let i=0;i<10000;i++){
+      //   let d=document.createElement('p')
+      //   d.innerHTML='你好'
+      //   document.body.append(d)
+      // }
+      // function fib(x){
+      //   if(x==1||x==2){
+      //     return 1
+      //   }else{
+      //     return fib(x-1)+fib(x-2)
+      //   }
+      // }
+      // console.log(fib(40))
+      // console.timeEnd()
+      // document.dispatchEvent(eve)
+      app.onclick=function(){
+        console.log('app事件触发了')
+      }
+      // document.addEventListener('click',function(){
+      //    console.log(event.currentTarget,event.target==aa)
+      //     event.cancelBubble?event.cancelBubble:event.stopPropagation();
+      //     event.preventDefault()
+      //   },true)
+      document.addEventListener('mousemove',draw,false)
+      function draw(e){
+        let d= document.createElement('div');
+        d.setAttribute('style',`height:20px;width:20px;background-color:red;position:absolute;left:${e.clientX}px;top:${e.clientY}px`);
+        document.body.append(d);
+        while(document.body.children.length>10){
+          Array.from(document.body.children).shift().remove()
+        }
+      }
+      document.addEventListener('click',()=>{
+        console.log('quxiao')
+        document.removeEventListener('mousemove',draw,false)
+        while(document.body.children.length>0){
+          Array.from(document.body.children).shift().remove()
+        }
+      })
+      // let wheel=new WheelEvent('wheel');
+      document.addEventListener('wheel',e=>{
+        console.log('222222222222')
+      },false)
+    </script>
+  </body>
+</html>
+

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+     /* css background-attachment实现 */
+    .one,.two{
+      width: 100%;
+      height: 100vh;
+      text-align: center;
+      display: table-cell;
+      vertical-align: middle;
+    } 
+    div:nth-child(2n){
+      width: 100%;
+      height: 100vh;
+      background-size:100% 100%;
+      background-attachment: fixed;
+    }
+
+    div:nth-child(2){
+      background-image: url(./img/01.jpg);
+    }
+    div:nth-child(4){
+      background-image: url(./img/02.jpg);
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div class="one">范德萨范德萨范德萨范德范德萨范德萨范德萨范德范德萨范德萨范德萨范德范德萨范德萨范德萨范德范德萨范德萨范德萨范德范德萨范德萨范德萨范德范德萨范德萨范德萨范德</div>
+    <div></div>
+    <div class="two">撒范德萨范德萨范德萨范德范德萨范德萨范德范德萨范德萨范德萨范德萨发生的</div>
+    <div></div>
+</div>
+</body>
+</html>

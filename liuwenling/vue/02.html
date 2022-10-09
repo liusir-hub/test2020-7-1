@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <p @click.self="tell">
+      {{count}}
+      <button @click="count+=1">增加count</button>
+      <button @click="yuansheng(1,$event)">获取原生事件</button>
+      <button @keyup.left="yuansheng(2)">响应键盘事件</button>
+    </p>
+    <div>
+      <!--表单输入绑定  v-model 双向数据绑定 -->
+      <!--input  v-model是value与input事件的语法糖-->
+      <!-- <input type="text" v-model="val"> -->
+      <input type="text" :value="val" @input="input($event)">
+      <!--单选按钮   绑定到value与-->
+      <input type="radio" value="one" v-model="radio" >
+      <input type="radio" value="two" v-model="radio" >
+      <!-- 单个复选框按钮  v-model绑定到布尔值 -->
+      <input type="checkbox" v-model="singleBox" true-value="need" false-value="noneed">
+      <!-- 多个复选框按钮  v-model绑定到数组 -->
+      <input type="checkbox" value="one" v-model="multiBox">
+      <input type="checkbox" value="two" v-model="multiBox">
+      <input type="checkbox" value="three" v-model="multiBox">
+      <!-- 选择框  单选时候  option有value则绑定到value值 否则为option内部值-->
+      <select name="" id="" v-model="multiSingle">
+        <option value="" disabled>请选择</option>
+        <option value="one">1</option>
+        <option value="two">2</option>
+        <option value="three">3</option>
+      </select>
+      <!-- 选择框 多选  -->
+      <select name="" id="" v-model="multiMul" multiple>
+        <option value="one">1</option>
+        <option value="two">2</option>
+        <option value="three">3</option>
+      </select>
+      <!-- 测试  写一个提问框 每次输入完成区亲求接口-->
+      <label for="que">请提问</label>
+      <input type="text" id="que" v-model.lazy="ques" @change="toque">
+      <div>
+        <to-do></to-do>
+        <!-- <to-to :data="name" :id="id" :text="text"></to-to> 需要对props重构 -->  
+        <to-to v-slot="{scope}" :list="list">
+          <div >
+            <p>{{scope.id}}</p>
+            <button @click="inc(scope.id)">点击放大字体</button>
+          </div>
+        </to-to>
+      </div>
+    </div>
+  </div>
+  <script type="module">
+    import Vue from 'https://cdn.jsdelivr.net/npm/vue@2.7.10/dist/vue.esm.browser.js';
+    let bus =new Vue()
+    Vue.component('to-do',{
+      props:[],
+      data(){
+        return {
+          name:'我是组件'
+        }
+      },
+      template:'<div><hr>{{name}}</div>',
+      mounted() {
+        bus.$emit('hihi',123)
+        console.log('qqqq')
+      },
+      methods:{
+
+      }
+    })
+    
+    let app =new Vue({
+      el:'#app',
+      data:{
+        count:0,
+        val:'表单输入绑定',
+        radio:false,
+        singleBox:'',
+        multiBox:[],
+        multiSingle:'',
+        multiMul:[],
+        ques:'世界第一台计算机',
+        list:[
+          {id:1,name:'zhangsan'},
+          {id:2,name:'lisi'},
+          {id:3,name:'wangwu'}
+        ]
+      },
+      watch:{
+        radio(newval){
+          console.log(newval)
+        },
+        singleBox(newval){
+          console.log(newval)
+        },
+        multiBox(newval){
+          console.log(newval)
+        },
+        multiSingle(newval){
+          console.log(newval)
+        },
+        multiMul(newval){
+          console.log(newval)
+        },
+        ques(newval){
+          console.log(newval)
+          let ex=/^\s+|\s+$/g
+          this.ques=newval.replace(ex,'')
+        }
+      },
+      methods: {
+        yuansheng(mess,e){
+          console.log(mess,e)
+        },
+        tell(){
+          console.log('pppppppppppp')
+        },
+        input(e){
+          this.val=e.target.value
+          console.log(this.val)
+        },
+        toque(){
+          console.log(this.ques)
+        },
+        inc(data){
+          data+=1
+          console.log('111',data)
+        }
+        //事件修饰符 .stop .capture .self .once .prevent
+      },
+      components:{
+        'to-to':{
+          props:{
+            list:{
+              type:Array
+            }
+          },
+          data(){
+            return {
+              name:'子组件'
+            }
+          },
+          template:`
+          <div>{{name}}
+              <slot v-for="item in list" :scope='item'></slot>
+              // <button >点击放大字体</button>
+            </div>`,
+          mounted(){
+            bus.$on('hihi',(e)=>{
+              console.log(e)
+            })
+            console.log('aaa')
+          }
+        }
+      }
+    })
+
+
+  </script>
+</body>
+</html>

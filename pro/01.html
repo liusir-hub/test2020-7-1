@@ -6,10 +6,98 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
+  <base href="http://baidu.com">
+  <style>
+    html,
+    body,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    ul {
+      margin: 0;
+      padding: 0;
+    }
+
+    ;
+
+    ul,
+    li {
+
+      list-style: none;
+    }
+  </style>
 </head>
 
 <body>
+  <header class="hehe" style="height: 200px;">
+    <div>
+      <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+      </ul>
+    </div>
+    <div>
+      <p>
+        <span>213</span>
+      </p>
+    </div>
+  </header>
+  <script>
+    /* 
+      Dom节点对象  dom树可以看作是一个大的对象 具备属性，方法等
+    */
+    let Dom = document;
+    let PDom = document.getElementsByTagName('header');
+    console.log(PDom)
+    console.log(PDom[0].childNodes)
+    console.log(PDom[0].children)
+    /* 
+      Dom.childNodes 指的是这个节点下的所有子节点包括 文本text节点
+      Dom.children  指的是这个节点下的所有标签节点 
+    */
+    console.log(PDom[0].children[0].nextSibling)
+    console.log(PDom[0].children[0].previousSibling)
+    PDom[0].children[0].firstChild.nodeValue = '<p>这是js加的段落</p>'
+    /* 
+      nodeValue 这个属性只有text节点和attribute节点才会有值  其他的元素节点 为null
+      document={
+        nodeType:9,===NODE.DOCUMENT_NODE 对应的常量
+        nodeName:'#document',
+        nodeValue:null
+      }
+      elementNode={
+        nodeType:1,===NODE.ELEMENT_NODE
+        nodeName:'DIV',
+        nodeValue:null
+      }
+      attributeNode={
+        nodeType:2,===NODE.ATTRIBUTE_NODE
+        nodeName:'class',
+        nodeValue:'hehe'
+      }
+      textNode={
+        nodeType:3,===NODE.TEXT_NODE
+        nodeName:'#text',
+        nodeValue:'张三',
+      }
 
+    */
+    if (PDom[0].nodeType === Node.ELEMENT_NODE) {
+      console.log(PDom[0].nodeType, PDom[0].nodeName, PDom[0].nodeValue)
+      console.log(document.nodeType)
+      console.log(document, document.documentElement)
+      console.log(PDom[0].attributes[0].nodeValue)
+    }
+    /* 
+      document.baseURI 表示当前网页的绝对路径 为只读属性
+        主要是有window.location 和<base href=''>来决定的 
+    */
+    console.log(document.baseURI)
+  </script>
 </body>
 
 </html>

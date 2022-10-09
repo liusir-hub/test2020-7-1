@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .box{
+      width: 100%;
+    }
+    .box::after{
+      display: block;
+      content: 0;
+      width: 0;
+      height: 0;
+      overflow: hidden;
+      
+    }
+    .box>:nth-child(1){
+      height: 100px;
+      background-color: greenyellow;
+      float: left;
+    }
+    .box>:nth-child(2){
+      height: 200px;
+      background-color: red;
+      float: left;
+      /* overflow: hidden; */
+    }
+    .box>:nth-child(3){
+      height: 50px;
+      background-color: yellow;
+      float: left;
+      /* overflow: hidden; */
+    }
+    .over{
+      
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <div>士2323分</div>
+    <div>啊的3法</div>
+    <div>阿大叔</div>
+  </div>
+</body>
+</html>

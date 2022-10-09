@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    [v-cloak]{display:none};
+  </style>
+</head>
+<body>
+  <div id="app">
+    <p v-cloak>{{val}},{{vava}},{{arr.join('')}},{{JSON.stringify(obj)}}</p>
+    <button @click="showval">点击</button>
+  </div>
+  <script type="module">
+    /* 父子组件生命周期  父组件生命周期执行到beforeMount后 开始执行子组件的生命周期到mounted后父组件执行mounted
+    * mixin混入  基本数据类型使用组件内部数据，对象则合并
+    * 生命周期   先执行混入的在执行组件内部
+    * 
+    * 
+    * 
+    * 
+    *  */
+    import Vue from 'https://cdn.jsdelivr.net/npm/vue@2.7.10/dist/vue.esm.browser.js'
+    Vue.mixin({
+      data(){
+        return{
+          val:1,
+          vava:2000,
+          arr:[1,2,3],
+          obj:{
+            a:20
+          }
+        }
+      },
+      methods:{
+        showval(){
+          console.log(this.val,'混入方法')
+        }
+      },
+      watch:{
+        arr(newval){
+          console.log(newval,'混入watch')
+        }
+      },
+      created(){
+        console.log('混入的created')
+      }
+    })
+
+
+
+    let app=new Vue({
+      mixins:[{data(){return{val1:11}}},{}],
+      el:'#app',
+      data:{
+        val:200,
+        arr:[4,5,6],
+        obj:{
+            b:30
+          }
+      },
+      methods:{
+        showval(){
+          this.arr.push(1);
+          console.log(this.val,'zujian');
+        }
+      },
+      watch:{
+        arr(newval){
+          console.log(newval,'组件监听')
+        }
+      },
+      beforeCreate() {
+        console.log('跟组件beforeCreate',)
+      },
+      created(){
+        console.log('跟组件created')
+      },
+      beforeMount() {
+        console.log('跟组件beforeMount')
+      },
+      mounted(){
+        console.log('跟组件mounted')
+      }
+    })  
+  </script>
+</body>
+</html>

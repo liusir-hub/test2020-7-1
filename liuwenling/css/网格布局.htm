@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    main{
+      display: grid;
+      grid-template-columns:repeat(3,200px);
+      grid-template-rows:repeat(3,100px);
+      align-items:center;
+      justify-items:center;
+      grid-template-areas: 
+      'a b b'
+      'c d e'
+      'f d g';
+    }
+    div{
+      border: 1px solid red;
+    }
+    div:nth-child(2){
+      grid-column-start:2;
+      grid-column-end:4;
+      grid-area:b;
+    }
+    div:nth-child(5){
+      grid-row-start: 2;
+      grid-row-end: 4;
+      grid-area: d;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div>1</div>
+    <div>2</div>
+    <!-- <div>3</div> -->
+    <div>4</div>
+    <div>5</div>
+    <div>6</div>
+    <div>7</div>
+    <!-- <div>8</div> -->
+    <div>9</div>
+  </main>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="proload" rel="stylesheet" href="./selector.css">
+  <style>
+    a:hover{ /*伪类选择器*/
+      color:blue;
+    }
+    /*伪类选择器*/
+    /* input:focus{
+      color: red;
+      outline: 0;
+    }
+    input::placeholder{
+      color:yellow;
+    } */
+    .ceshi{
+      background-color: green;
+    }
+    div.ceshi{
+      width: 100px;
+      height: 100px;
+      background-color: red;
+    }
+    .ceshi+div{
+      background-color: blue;
+    }
+    #id{
+
+    }
+    .class{
+
+    }
+    div{
+
+    }
+    #id div{
+
+    }
+    .class>div{
+
+    }
+    .class+div{
+
+    }
+    .class,#id{
+
+    }
+    button:focus{
+
+    }
+    p::first-letter{
+
+    }
+    div[name='button']{
+
+    }
+    /*css3 新增选择器*/
+    div:not([name='button']){
+
+    }
+    button:disabled{
+
+    }
+    input:empty{
+
+    }
+    input:nth-child(2){
+
+    }
+    input[name*='he']{
+      outline: 0;
+    }
+    input[name^='he']{
+      color: red;
+    }
+    input[name$='he']{
+      color: green;
+    }
+    p{
+      font-size: 20px;
+      font-family: 'Courier New', Courier, monospace;
+      font-weight: 500;
+      font-style: italic;
+      text-indent: 2em;
+      text-align: center;
+      text-shadow: 2px 3px 2px red;/*文字阴影属性 x偏移 y偏移 阴影尺寸 阴影颜色*/
+      text-decoration: underline;
+      line-height: 20px;
+      text-transform: lowercase;
+      white-space: nowrap;
+      /* word-spacing: 2em; */
+      letter-spacing: 2em;
+      color: green;
+      direction: rtl;
+      cursor:pointer;
+    }
+    header,footer{
+      width: 100px;
+      height: 100px;
+      margin: 20px;
+    }
+    header{
+      background-color: yellow;
+    }
+    footer{
+      background-color: aqua;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <a >点击</a>
+    <input type="text" autofocus placeholder="请输入">
+    <button>
+
+    </button>
+    <div style="width: 100px;height: 100px;"></div>
+    <div class="ceshi"></div>
+    <div style="width: 100px;height: 100px;opacity: 0;visibility: hidden; "  ></div>
+    <input type="text" name="helod">
+    <input type="text" name="ohed">
+    <input type="text" name="oooo">
+    <input type="text" name="helod">
+    <input type="text" name="ohed">
+    <input type="text" name="oohe">
+    <p>的说法是的<span>手动阀手动阀</span>看法和</p>
+    <p>
+      <a href="./">士大夫大师傅<span>但是</span></a>
+    </p>
+    <main style="width:300px;border:1px solid red;">
+      <header >士大夫胜多负少</header>
+      <div>
+        <footer>手动阀手动阀</footer>
+      </div>
+    </main>
+    
+  </div>
+</body>
+</html>

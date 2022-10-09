@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    /* 单行超出隐藏 */
+    p{
+    width: 50px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+    /*多行文本超出隐藏 基于高度截断  总体思路是伪元素定位遮挡实现*/
+    section{
+      height: 40px;
+      width: 50px;
+      overflow: hidden;
+      position:relative
+    }
+    section::after{
+     content:'...';
+     position: absolute;
+     bottom: 0;
+     right: 0;
+     width: 1em;
+     padding-left: 2px;
+     background: white;
+    }
+    /* 另一种多行超出隐藏的方法  基于行数的截断 由于借助了webkit内核 所以该方法多用于移动端 */
+    nav{
+      width: 50px;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <p>撒旦范德萨范德萨发顺丰</p>
+    <article>
+      <section>
+        点十六分就啊是两地分居的萨芬撒地方
+      </section>
+      <nav>撒旦飞洒发2生</nav>
+    </article>
+  </div>
+</body>
+</html>

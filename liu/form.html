@@ -58,9 +58,15 @@
         <p>选择框-多选{{selectmulV}}</p>
         <input type="text" name="" id="" v-model.lazy.number='numV'>
         <p>值类型{{typeof numV}}</p>
-        <aaa></aaa>
-        <ccc></ccc>
+        <aaa hello-world='hellll' nameAA='nameAA'></aaa>
+        <p>{{count}}</p>
+        <ccc @like-hi='count++'></ccc>
         <bbb></bbb>
+        <hr>
+        <p>input++{{inputV}}</p>
+        <input-change placeholder='请输入' @change='keyDown' v-bind:syncc='titie' v-on:update:syncc='titie=$event'>
+        </input-change>
+        <p>{{titie}}</p>
       </div>
     </div>
   </div>
@@ -71,7 +77,11 @@
           count: 0
         }
       },
-      template: '<div @click="count++">{{count}}</div>'
+      props: ['helloWorld', 'nameaa'],
+      /* 由于heml对于节点 attribute 大小写不敏感，会自动把attribte转为小写  因此我们推荐一直使用短横线写法
+        短横线写法 以为这props获取需要写成对应的驼峰式写法
+      */
+      template: '<div @click="count++">{{count}}---------{{helloWorld}}---{{nameaa}}</div>'
     })
     Vue.component('ccc', {
       data() {
@@ -79,7 +89,7 @@
           count: 0
         }
       },
-      template: '<div @click="count++">{{count}}</div>'
+      template: '<div @click="count++&&$emit(`like-hi`)">{{count}}</div>'
     })
     let vm = new Vue({
       el: '#app',
@@ -97,6 +107,9 @@
         selectV: '',
         selectmulV: [],
         numV: null,
+        count: 0,
+        inputV: '',
+        titie: '111'
       },
       computed: {
 
@@ -112,6 +125,34 @@
             }
           },
           template: '<div @click="countt++">{{countt}}</div>'
+        },
+        inputChange: {
+          data() {
+            return {
+
+            }
+          },
+          inheritAttrs: false,
+          props: ['syncc'],
+          mounted() {
+
+          },
+          computed: {
+            inheritEvents() {
+              return Object.assign({}, this.$listeners, {
+                input(e) {
+                  vm.$emit('update:syncc', e.target.value)
+                },
+                // keyDown(value) {
+                //   vm.$emit('update:sync', '2221')
+                // }
+              })
+            }
+          },
+          methods: {
+
+          },
+          template: '<label><input type="text" :value="syncc" v-on="inheritEvents" ></label>'
         }
       },
       methods: {
@@ -119,6 +160,9 @@
           console.log(e)
           this.textvup.push(this.textv)
           this.textv = ''
+        },
+        keyDown() {
+          console.log(1111)
         }
       },
       created() {

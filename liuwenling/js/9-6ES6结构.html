@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    let [a=20,...b]=[2,412,2,1]
+    console.log(a,b)
+    let {map,reduce,filter} = Array.prototype;
+    let {foo:bar=10,fo=20}={foo:20}
+    console.log(bar,fo)
+    let aa=[1,21321,3,21321,32141]
+    let bb= [12,3,12312,3,1]
+    function move({x=0,y=0}={}){
+      return x+y
+    }
+    console.log(move())
+    console.log(90071992540907409920n*180143985099090904819840n+1n,90071992540907409920*180143985099090904819840)
+    let n=1n;
+    for(let i =1n;i<70n;i++){
+      n*=i;
+    }
+    console.log(n)
+  </script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    let set =new Set([1,'2',3])
+    let set1=new Set('dsfasflsjeadsf')
+    console.log([...set1],[...'adsf'])
+    for(let key of set.entries()){
+      console.log(key)
+    }
+    let arr=[[1,2],[function(){},20],[set,set1]];
+    // let map=new Map(arr);
+    // console.log(map,new Map(set));
+    //上面构造函数参数写法实际就是下面
+    let map1=new Map()
+    arr.forEach(([x,y])=>{
+      map1.set(x,y)
+    })
+    console.log(map1)
+    let m=['a']
+    map1.set(m,555)
+    console.log(map1.get(m))
+    let obj={a:1,b:2}
+    let obj1=['a','b','c']
+    let obj2= [1,2,3]
+    console.log(Object.entries(obj))//;[[a,1],[b,2]]
+
+    let robj={};
+    obj1.forEach(function(i,ind){
+      robj[i]=this[ind]
+    },obj2)
+    console.log(robj)
+  </script>
+</body>
+</html>

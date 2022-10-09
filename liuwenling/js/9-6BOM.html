@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>document</title>
+    <style>
+      div[id='app']{
+        width: 100px;
+        height: 100px;
+        background-color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="./forBom.js"  defer></script><!-- DOM解析完才会执行 -->
+    <script src="./forBom.js"  async></script><!-- 另一个进程下载，JS下载完就执行，不能保证js加载顺序 一般js脚本呢之间没有依赖关系就使用async -->
+    <div id="app"></div>
+    <script>
+      // console.log(window.devicePixelRatio,window.navigator.userAgent)
+      //Cookie
+      //读写cookie 使用下面
+      document.cookie = 'test1 = hello';
+      console.log(document.cookie)
+      localStorage.setItem('test1','hello')
+      //通过设置httponly属性 可以防止js脚本拿到cookie值
+
+      window.addEventListener('message',(e)=>{
+        console.log(e)
+      },false)
+    </script>
+   
+  </body>
+</html>

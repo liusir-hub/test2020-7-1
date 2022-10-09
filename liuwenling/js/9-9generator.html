@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+
+    function* foo(){
+      let y1=yield 30+30;
+      console.log(y1)
+      let y2=yield 40
+      console.log(y2)
+    }
+    let bar=foo()
+    console.log(bar)
+    console.log(bar.next(),bar.next(),bar.next())
+    function* bb(){
+      console.log('11111')
+      let y=100+(yield 100+1);
+      let z=y+(yield 20);
+      return y+z
+    }
+    let bbg=bb() //此时函数调用 不执行  只是返回遍历器对象
+    console.log(bbg.next())//next 遇到下一个yield 并返回其后面的值
+    console.log(bbg.next(100))
+    console.log(bbg.next(20))
+    //实现for...of遍历对象  实际for..of是遍历的iterator接口因此给需要的对象添加遍历器函数
+    let obj={
+      a:10,
+      b:20,
+      [Symbol.iterator]:function *(){
+        for(let key in this){
+          yield this[key]
+        }
+      }
+    }
+    for(let i of obj){
+      console.log(i)
+    }
+    function* fib(){
+      let [pro,nex]=[0,1];
+      for(;;){
+        yield nex;
+        yield *gg();
+        [pro , nex]=[nex,pro+nex];
+      }
+    }
+    for(let i of fib()){
+      if(i>10) break;
+      console.log(i)
+    }
+    function* gg(){
+      yield 9;
+    }
+    function *getdata(url){
+      ///一堆其他同步操作
+      let result =yield request(url);
+      let res=JSON.parse(retult)
+      return res
+    }
+    function request(url){
+      fetch(url).then(res=>{
+        it.next(res)
+      })
+    }
+    let it =getdata()
+    it.next();
+  </script>
+</body>
+</html>

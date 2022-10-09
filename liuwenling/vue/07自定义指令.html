@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    [v-cloak]{display:none}
+  </style>
+</head>
+<body>
+  <div id="app" v-cloak>
+    <input type="text" v-mmo:[dongtai]="asfs" >
+    <div v-move>撒犯得上发射点</div>
+    <p v-color="'red'">撒旦范德萨发生发射点</p>
+  </div>
+  <script type="module">
+    import Vue from 'https://cdn.jsdelivr.net/npm/vue@2.7.10/dist/vue.esm.browser.js'
+    let app =new Vue({
+      el:'#app',
+      data:{
+        asfs:200,
+        dongtai:'right'
+      },
+      directives:{
+        mmo:{
+          inserted(el,binding){
+            console.log(binding)
+            el.focus()
+            el.style='position:absolute;'
+            if(binding.arg==='left'){
+              el.style.left='50px'
+            }else{
+              el.style.right='50px'
+            }
+          }
+        },
+        move(el){
+          el.style.background='red'
+        },
+        color(el,binding){
+          el.style.color=binding.value
+        }
+      }
+    })
+
+  </script>
+</body>
+</html>

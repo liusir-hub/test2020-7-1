@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    html,body{
+      padding: 0;
+      margin: 0;
+    }
+    .app{
+      width: 100px;
+      height: 100px;
+      padding: 10px;
+      margin: 8px;
+      position: fixed;
+      z-index: 100;
+      top: 19px;
+      left: 29px;
+      border: 5px solid red;
+      box-sizing: border-box;
+      overflow: scroll;
+      background-color: red;
+      background-clip:content-box
+    }
+    .app:hover{
+      width: 200px;
+    }
+    .app>div{
+      height: 500px;
+      width: 100vw;
+    }
+    #app{
+      width: 200vw;
+    }
+  </style>
+</head>
+<body>
+  <div class="app" onclick="dosome()"><div></div><p id="p"></p></div>
+  <div id="app" style="height:200px;position:relative" data-a="a" data-b="b">
+    <div>1</div>
+    <div>2</div>
+  </div>
+  <div ><ul id="ul">
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+  </ul></div>
+  <script>
+   /*
+      Node 接口所有节点对象都继承了node接口。这是DOM操作的基础
+    */
+    let app=document.getElementById('app')
+    console.log(app.previousSibling,app.nextSibling,app.firstChild,app.childNodes,app.children,app.parentNode,app.parentElement)
+    let D=document.createElement('p')
+    D.textContent='你好'
+    let D1=document.createElement('p')
+    D1.textContent='hello'
+    // app.appendChild(D);
+    // app.parentNode.insertBefore(D,app)
+    // app.removeChild(app.lastElementChild);
+    // app.replaceChild(D,app.firstElementChild)
+    app.prepend(D)
+    let nodelist=app.childNodes
+    let nodelist1=document.querySelectorAll('div')
+    let htmllist=app.children;
+    let htmllis1=document.getElementsByClassName('.app')
+    console.log(nodelist,nodelist1)//都是nodelist
+    console.log(htmllist,htmllis1)//htmllist
+    // 不同点 是HTMLCollecttion 没有数组的forEach方法
+    D.remove()
+    app.firstElementChild.before(D,D1)
+    document.cookie='213123'
+    let attr= document.createAttribute('href');
+    attr.value='./9-4DOM.html';
+    app.setAttributeNode(attr)
+    let ev=document.createEvent('Event');
+    ev.initEvent('built',true,true);
+    document.addEventListener('built',()=>{
+      console.log(000)
+    },false)
+    function dosome(){
+      document.dispatchEvent(ev)
+    }
+    let attrs=app.attributes
+    console.log(attrs,app.style.height)
+    console.log(app.dataset)
+    let box=document.getElementsByClassName('app')[0]
+    console.log(box.style)//这里获取不到 因为element.style是用来获取行内属性的
+    console.log(box.clientHeight,box.offsetHeight,box.scrollHeight)
+    console.log(box.clientTop,box.offsetTop,box.scrollTop)
+    box.addEventListener('scroll',()=>{
+      console.log(box.scrollTop)
+    },false)
+    // p.scrollIntoView()
+    box.addEventListener('mouseenter',()=>{
+      console.log(window.getComputedStyle(box,':hover').width)
+    })
+    let observer=new MutationObserver(function(mutations,observer){
+      console.log(mutations)
+    })
+    let nlist=document.getElementById('app');
+    let options={
+      'childList':true,
+      'attributes':true
+    }
+    observer.observe(nlist,options)
+    ul.onclick=function(e){
+      console.log(e.target)
+        // e.target.remove()
+        // this.removeChild(e.target)
+    }
+    box.onclick=function(e){
+      console.log(e)
+      //e.clientX,Y 是鼠标点击处 距离网页可视区 左边和上面的距离
+      //e.offsetX,Y 是鼠标点击区 相对于点击元素 content左边和上面的距离
+      //e.pageX,Y  是鼠标点击区 相对于页面的 左边和上面距离
+      //screenX,Y  是鼠标点击去 相对于浏览器 左边和上面的距离
+    }
+  </script>
+</body>
+</html>

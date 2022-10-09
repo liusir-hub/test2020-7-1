@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    *{
+      padding: 0;
+      margin: 0;
+    }
+    div{
+      width: 100%;
+    }
+    ul,li{
+      list-style: none;
+    }
+    .box{
+      width: 200px;
+      height: 100px;
+      margin: auto;
+      background: pink;
+      position: relative;
+      overflow: hidden;
+    }
+    .box div{
+      width: 30px;
+      height: 30px;
+      text-align: center;
+      background: peru;
+      position: absolute;
+      z-index: 100;
+    }
+    .left{
+      top:50%;
+      transform: translateY(-50%);
+    }
+    .right{
+      right: 0;
+      top:50%;
+      transform: translateY(-50%);
+    }
+    ul{
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      display: flex;
+      overflow-x: visible;
+      left: 0;
+      transition: all 2s ease;
+    }
+    ul li{
+      width: 100%;
+      height: 100%;
+      flex-shrink: 0;
+    }
+    .li1{
+      background-color: red;
+    }
+    .li2{
+      background-color: orange;
+    }
+    .li3{
+      background-color: yellow;
+    }
+    .li4{
+      background-color: green;
+    }
+    .li5{
+      background-color: blue;
+    }
+    #box{
+      width: 100px;
+      height: 100px;
+      background: red;
+      position: absolute;
+      z-index: 200;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <div id="box">sadf</div>
+    <div class="box">
+      <ul>
+        <li class="li1">1</li>
+        <li class="li2">2</li>
+        <li class="li3">3</li>
+        <li class="li4">4</li>
+        <li class="li5">5</li>
+        <li class="li1">1</li>
+      </ul>
+      <div class="left">&lt;</div>
+      <div class="right">&gt;</div>
+    </div>
+  </div>
+  <script>
+    let lis=document.querySelectorAll('li')
+    let ul=document.querySelectorAll('ul')[0]
+    let box=document.querySelectorAll('.box')[0]
+    let left=document.getElementsByClassName('left')[0]
+    let right=document.getElementsByClassName('right')[0]
+    left.onclick=function(){
+      
+    }
+    
+
+
+    /* 函数防抖与节流 */
+    //防抖  在规定事件内只允许执行一次  通常用于输入框检测 生成data-list提示
+    function debounce(fn,delay){
+      let timer=null;
+      return function(){
+        let context=this;
+        let arg=arguments;
+        console.log(arg)
+        clearTimeout(timer);
+        setTimeout(() => {
+          fn.apply(context,arg)
+        }, delay);
+      }
+    }
+    function throttle(fn,delay){
+      let prev=Date.now();
+      return function(){
+        let context=this;
+        let arg=arguments;
+        let now=Date.now();
+        if(now-prev>=delay){
+          fn.apply(context,arg)
+          prev=Date.now()
+        }
+      }
+    }
+    //拖拽实现下
+    window.onload=function(){
+      let Dom=document.getElementById('box')
+      Dom.onmousedown=function(e){
+        console.log(e,'onmousedown')
+        var e= e ||window.event;
+        let X=e.clientX-Dom.offsetLeft;
+        let Y=e.clientY-Dom.offsetTop;
+        Dom.onmousemove=function(e){
+          console.log(e,'onmousemove')
+          let left=e.clientX-X;
+          let top=e.clientY-Y;
+          //拖拽出可视区
+          if(left<0){
+            left=0
+          }else if(left>window.innerWidth-Dom.offsetWidth){
+            left=window.innerWidth-Dom.offsetWidth
+          }
+          if(top<0){
+            top=0
+          }else if(top>window.innerHeight-Dom.offsetHeight){
+            top=window.innerHeight-Dom.offsetHeight
+          }
+          Dom.style.left=left+'px'
+          Dom.style.top=top+'px'
+        }
+        Dom.onmouseup=function(){
+          this.onmousemove=null;
+          this.onmouseup=null;
+        }
+      }
+    }
+    //rem实现原理
+    function setRem(){
+      let W=document.documentElement;
+      let width=W.getBoundingClientRect();
+      let rem=width/75;
+      W.style.fontSize=rem+'px'
+    }
+    //实现图片的懒加载
+    function lazy(){
+      let img=document.getElementsByTagName('img');
+      let clientHeight=window.innerHeight||document.documentElement.clientHeight;
+      function lazyload(){
+        let scrollHight=window.pageYOffset||document.documentElement.scrollTop||document.body.scrollTop
+        for(let i of img){
+          let x= scrollHight+clientHeight-i.offsetTop;
+          if(x>0&&x<clientHeight+i.height){
+            i['src']=i.getAttribute('data')
+          }
+        }
+      }
+    }
+    //实现一个简单的路由
+    class Route{
+      constructor(){
+        this.routes={}
+        this.currenHash='';
+        this.refresh=this.refresh.bind(this)
+        // window.addEventListener('load',this.refresh,false)
+        window.addEventListener('hashchange',this.refresh,false)
+      }
+      store(path,cb){
+        this.routes[path]=cb
+      }
+      refresh(){
+        this.currenHash=location.hash.slice(1)
+        this.routes[this.currenHash]()
+      }
+    }
+    let router=new Route()
+    router.store('adf',function(){
+      console.log('123')
+    })
+    //实现一个双向数据绑定
+    let obj={
+      a:20
+    }
+    let proxy=new Proxy(obj,{
+      get(target,prop,reciver){
+        console.log(prop)
+      },
+      set(target,prop,value,reciver){
+        return Reflect.set(target,prop,value,reciver)
+      }
+    })
+    console.log(proxy.a)
+    console.log(proxy.a=30,obj.a)
+    //实现一个eventBus
+    class eventA{
+      constructor(){
+        this.events=new Map()
+      }
+      $on(params,cb){
+        if(!this.events.get(params)){
+          this.events.set(params,cb)
+        }
+      }
+      $emit(params){
+        let hander=this.events.get(params)
+        hander.apply(this,[...arguments].slice(1))
+      }
+    }
+    let bus=new eventA();
+    bus.$on('hh',function(a){
+      console.log(a)
+    })
+    bus.$emit('hh',200)
+    //js实现继承  构造函数式继承
+    function Person(age){
+      this.age=age
+    }
+    Person.prototype.say=function(){
+      return this.age
+    }
+    function Man(name){
+      Person.apply(this,[...arguments].slice(1))
+      this.name=name
+    }
+    Man.prototype=Object.create(Person.prototype)
+    let man=new Man('zhangs',20)
+    console.log(man.name,man.age,man.say())
+    //使用settimeout 模拟setInterval 
+    // setTimeout(function() {
+    //   setTimeout(arguments.callee, 500);
+    // }, 500);
+    //实现一个深拷贝
+    let objj ={
+      a:2
+    }
+    let objd=JSON.parse(JSON.stringify(objj))
+    
+    function deepClone(obj){
+      let copy=obj instanceof Array?[]:{};
+      for(let i in obj){
+        if(obj.hasOwnProperty(i)){
+          copy[i]=typeof obj[i]==='object'?deepClone(obj[i]):obj[i]
+        }
+      }
+      return copy
+    }
+    //实现一个浅拷贝
+    let obbj={...obj}
+    let obbjj=Object.assign({},obj)
+    //实现一个基本的Promise
+    //三个状态   自动执行   then
+    class Promises{
+      constructor(fn) {
+        this.state='pedding'
+        this.value;
+        this.reason;
+        let resolve= (value)=>{
+          if(this.state==='pedding'){
+            this.state='fulfilled'
+            this.value=value
+          }
+        }
+        let reject=reason=>{
+          if(this.state==='pedding'){
+            this.state='rejected'
+            this.reason=reason
+          }
+        }
+        try{
+          fn(resolve,reject)
+        }catch(e){
+          reject(e)
+        }
+      }
+      then(onresolve,onreject){
+        switch(this.state){
+          case 'fulfilled':
+            onreject();
+            break;
+          case 'rejected':
+            onreject();
+            break;
+          default:
+        }
+      }
+
+    }
+    let promis=new Promise(function(resolve,reject){
+
+    })
+    //手写一个new 
+    function _new(fun){
+      return function(){
+        let obj ={
+          __proto__:fun.prototype
+        }
+        fun.call(obj,...arguments)
+        return obj
+      }
+    }
+    //手写一个object.create  
+    function _create(obj){
+      function fn(){}
+      fn.prototype=obj;
+      return new fn()
+    }
+    let ob1j = Object.create(obj)//以一个对象生成一个对象实例
+    //手写call
+    Function.prototype.mycall=function(context=window,...arg){
+      context.fn=this;
+      let result =context.fn(context,...arg)
+      delete context.fn
+      return result
+    }
+    function foo(...arg){
+      console.log(this.a,arg)
+    }
+    let oo={
+      a:20
+    }
+    foo.mycall(oo,1,2,3)
+    //手写applay
+    Function.prototype.mybind=function(context,arg){
+      context.fn=this;
+      let result=context.fn(context,arg)
+      delete context.fn
+      return result
+    }
+    foo.apply(oo,[1,2,34,4,])
+    //手写bind
+    Function.prototype.mybind=function(context,...arg){
+      let _fn=this;
+      return function F(...rest){
+        if(this instanceof F){
+          return new _fn(...rest,...arg)
+        }else{
+          return _fn.apply(context,[...rest,...arg])
+        }
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>document</title>
+    <style>
+
+    </style>
+  </head>
+  <body>
+    <input type="text" id="i" list="dd">
+    <img src="../img/02.jpg" id="ii" alt="">
+    <datalist id="dd">
+      <option >111</option>
+      <option >222</option>
+      <option >333</option>
+    </datalist>
+    <script>
+      // i.oninput=function(){
+      //   console.log(event.target.value,event.data)
+        
+      // }
+      // i.onchange=function(e){
+      //   console.log(e.target.value)
+      // }
+      // i.addEventListener('paste',e=>{
+      //   e.preventDefault()
+      // },false)
+      // i.addEventListener('focus',e=>{
+      //   e.target.style.backgroundColor='red'
+      // },false)
+
+      
+      let img=document.createElement('img')
+      img.src='../img/02.jpg'
+      document.body.append(img)
+      img.addEventListener('loadstart',e=>{
+        console.log('开始下载')
+      })
+      ii.onloadstart=function(){
+        console.log('开始下载')
+      }
+      ii.onload=function(){
+        console.log('加载完成')
+      }
+    </script>
+  </body>
+</html> 

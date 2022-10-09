@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <form  method="post" enctype="multipart/form-data">
+    <input type="file" >
+    <input type="button" value="提交">
+  </form>
+  <script>
+    //核心 formdata  和 ajax
+    let file =document.querySelectorAll(`input[type='file']`)[0]
+    let btn= document.querySelectorAll(`input[type='button']`)[0]
+    let fordata=new FormData()
+    file.onchange=()=>{
+      var files=file.files;
+      console.log(files)
+      for(let i =0;i<files.length;i++){
+        if(!files[i].type.match(/image/)){
+          continue;
+        }
+        let xhr=new XMLHttpRequest();
+        xhr.open('POST','https://mock.apifox.cn/m1/1573012-0-default/xhr/01',true);
+        xhr.setRequestHeader('Content-Type',files[i].type);
+        xhr.send(files[i])
+        fordata.append('photo[]',files[i],files[i].name)
+      }
+    }
+    btn.onclick=()=>{
+      let xhr = new XMLHttpRequest();
+      xhr.open('POST','https://mock.apifox.cn/m1/1573012-0-default/xhr/01'),true;
+      // xhr.setRequestHeader('Content-Type',files[0].type)
+      xhr.onreadystatechange=function(){
+        if(xhr.status==200){
+          console.log('fasongchengong')
+        }
+      }
+      xhr.send(fordata);
+    }
+
+
+  </script>
+</body>
+</html>

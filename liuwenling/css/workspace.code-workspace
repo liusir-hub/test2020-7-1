@@ -1,0 +1,16 @@
+{
+  "folders": [
+	{
+		"path": "E:\\项目"
+	},
+	{
+		"path": "E:\\vue源码\\vue\\src\\core"
+	},
+	{
+		"path": "..\\..\\.."
+	}
+],
+  "settings": {
+    "liveServer.settings.multiRootWorkspaceName": "新建文件夹 (2)"
+  }
+}

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+  <style>
+    #app{
+      width: 100px;
+      height: 100px;
+      background-color: red;
+    }
+    #ap{
+      width: 100px;
+      height: 100px;
+      top: 100px;
+      background-color: green;
+    }
+  </style>
+<body>
+  <div id="app">
+
+  </div>
+  <div id="ap"></div>
+  <script>
+  class Drag{
+    constructor(){
+      this.x;this.y,this.fun
+    }
+    init(node){
+      node.style.position='absolute';
+      node.addEventListener('mousedown',e=>{
+        this.click(e,node)
+        this.stop(node)
+      },false)
+    }
+    click(e,node){
+      console.log(e,node,e.clientX,e.offsetX)
+      this.x=e.clientX-node.offsetLeft;
+      this.y=e.clientY-node.offsetTop;
+      console.log(this.x,this.y)
+      this.fun=(e)=>{
+        console.log('mousemove')
+        this.move(e,node)
+      }
+      node.addEventListener('mousemove',this.fun)
+    }
+    move(e,node){
+      let ul=e.clientX-this.x;
+      let ol=e.clientY-this.y;
+      console.log(ul,ol)
+      node.style.left=ul+'px'
+      node.style.top=ol+'px'
+    }
+    stop(node){
+      node.addEventListener('mouseup',()=>{
+        console.log(getEventListeners(node))
+        node.removeEventListener('mousemove',this.fun)
+      },false)
+    }
+  }
+  let D=new Drag()
+  D.init(app)
+  D.init(ap)
+  </script>
+</body>
+</html>

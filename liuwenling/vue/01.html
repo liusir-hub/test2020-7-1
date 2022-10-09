@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .color{
+      color:red;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <p>{{message}}</p>
+    <input type="text" v-model="message">
+    <to-do></to-do>
+    <to-go v-for="i in list" v-bind:ab="i" v-key="i.id" ></to-go>
+    <p>{{money|moneyformat}}</p>
+    <p>{{money|nn}}</p>
+    <to-to></to-to>
+    <p v-if="login" >
+      <label for="user">emial</label>
+      <input id="user" type="text">
+    </p>
+    <p v-else>
+      <label for="uesrs">qq</label>
+      <input id="users" type="text" key="1">
+    </p>
+    <button @click="login=!login">切换登录方式</button>
+    <div v-for="(item,index) in items" :key="item.id" @click="items.splice(index,1,0)">{{item.name}}<button >删除</button></div>
+    <star @choose="print"></star>
+    <button @click='change' :class="{color:true}" :style="{border:true,backgroundColor:'yellow'}">改变message,{{getdata}} </button>
+  </div>
+  <script type="module">
+    import Vue from 'https://cdn.jsdelivr.net/npm/vue@2.7.10/dist/vue.esm.browser.js';
+
+    Vue.component('to-do',{
+      template:'<p>代办事项</p>'
+    })
+    Vue.component('to-go',{
+      props:['ab'],
+      template:'<div>{{ab.name}}</div>'
+      // render(h){
+      //   return h('div',ab.name)
+      // }
+    })
+    Vue.filter('moneyformat',e=>{
+      return  e.toFixed(2)
+    })
+    
+    let app =new Vue({
+      el:'#app',
+      data:{
+        login:false,
+        message:'你好',
+        list:[
+          {id:1,name:'zhangsan'},
+          {id:2,name:'lisi'}
+        ],
+        items:[{name:'士大夫但是',id:1},{name:'的方式',id:3}],
+        money:200,
+        color:'color',
+        border:'border:1px solid green;'
+      },
+      watch:{
+        message(newol,oldol){
+          
+        }
+      },
+      methods:{
+        change(){
+          this.message='再见'
+        },
+        print(e){
+          console.log(e)
+        }
+      },
+      computed:{
+        getdata(){
+          return this.message+this.money
+        }
+      },
+      filters:{
+        nn(e){
+          return e*2
+        }
+      },
+      components:{
+        'to-to':{
+          data(){
+            return {
+              name:'我是组件'
+            }
+          },
+          template:'<p>{{this.name}}</p>'
+        },
+        'star':{
+          data(){
+            return {
+              list:[1,2,3,4,5],
+              value:true
+            }
+          },
+          methods:{
+            change(e,i){
+              console.log(e,i)
+              
+            }
+          },
+          template:`<div style='display:flex;' >
+                <p v-for='i in list' style='flex:1;position:relative' >{{i}}
+                  <input type="checkbox" :value='i' style='position:absolute;' @change='change($event,i)'>
+                  </p>
+              </div>`
+        }
+      },
+      beforeCreate() {
+        console.log(this,'beforecreated')
+      },
+      created(){
+        console.log(this.message+'created')
+      }
+    })
+  </script>
+</body>
+</html>
