@@ -5,28 +5,27 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <style>
-    #app{
-      font-size: 10px;
+  <script>
+    function clickD(e){
+      console.log(e)
     }
-    .container{
-      height: 100px;
-      float: left;
-      background: red;
+    function clickP(e){
+      console.log(e)
     }
-    #app:after{
-      content: '';
-      display: block;
-      clear: both;
-      
+    window.onload=function(){
+      app.addEventListener('click',function(e){
+        console.log(this)
+        console.log(this===e.currentTarget)
+        console.log(this===e.target)
+      },true)
     }
-  </style>
+  </script>
 </head>
 <body>
-  <div id="app">
-    <div class="container">
-      12
-    </div>
+  <div id="app" >
+    <p >点击我</p>
+    <p>sdfsfsff</p>
   </div>
+
 </body>
 </html>
